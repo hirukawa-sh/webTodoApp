@@ -8,42 +8,24 @@
 </head>
 <body>
 
-<div class="modal fade" id="myModal" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">サブタスク入力</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <input type="text" id="subtask" class="form-control" placeholder="サブタスクを入力">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
-        <button type="button" id="modal-ok" class="btn btn-primary">OK</button>
-      </div>
-    </div>
+<div class="h1 container">ToDoアプリ ver1.04📝</div>
+
+<div class="h2 container" id="date-display"></div>
+<div class="container" id="ww_015ccc60f42be" v='1.3' loc='id' a='{"t":"responsive","lang":"ja","sl_lpl":1,"ids":["wl926"],"font":"Arial","sl_ics":"one_a","sl_sot":"celsius","cl_bkg":"image","cl_font":"#FFFFFF","cl_cloud":"#FFFFFF","cl_persp":"#81D4FA","cl_sun":"#FFC107","cl_moon":"#FFC107","cl_thund":"#FF5722"}'>More forecasts: <a href="https://oneweather.org/ja/tokyo/10_days/" id="ww_015ccc60f42be_u" target="_blank">東京 10日間天気</a></div><script async src="https://app3.weatherwidget.org/js/?id=ww_015ccc60f42be"></script>
+
+<div class="container border gap-3 shadow p-3 my-3">
+  <div class="d-flex flex-column gap-3 flex-md-row mb-3">
+    <input type="text" id="todoInput" class="form-control" placeholder="やることを入力">
+    <button type="button" class="btn btn-primary col-12 col-md-auto" onclick="addTodo()">追加</button>
+    <button class="btn btn-secondary col-12 col-md-auto" onclick="saveAsXML()">XML保存</button>
   </div>
+  <div class=""><input class="form-control" type="file" accept=".xml" onchange="loadFromXML(event)"></div>
 </div>
 
-  <div class="h1 container">ToDoアプリ ver1.04📝</div>
+<div class="container" id="todoList">
+</div>
 
-  <div class="h2 container" id="date-display"></div>
-  <div class="container" id="ww_015ccc60f42be" v='1.3' loc='id' a='{"t":"responsive","lang":"ja","sl_lpl":1,"ids":["wl926"],"font":"Arial","sl_ics":"one_a","sl_sot":"celsius","cl_bkg":"image","cl_font":"#FFFFFF","cl_cloud":"#FFFFFF","cl_persp":"#81D4FA","cl_sun":"#FFC107","cl_moon":"#FFC107","cl_thund":"#FF5722"}'>More forecasts: <a href="https://oneweather.org/ja/tokyo/10_days/" id="ww_015ccc60f42be_u" target="_blank">東京 10日間天気</a></div><script async src="https://app3.weatherwidget.org/js/?id=ww_015ccc60f42be"></script>
-  
-  <div class="container border gap-3 shadow p-3 my-3">
-    <div class="d-flex flex-column gap-3 flex-md-row mb-3">
-      <input type="text" id="todoInput" class="form-control" placeholder="やることを入力">
-      <button type="button" class="btn btn-primary col-12 col-md-auto" onclick="addTodo()">追加</button>
-      <button class="btn btn-secondary col-12 col-md-auto" onclick="saveAsXML()">XML保存</button>
-    </div>
-    <div class=""><input class="form-control" type="file" accept=".xml" onchange="loadFromXML(event)"></div>
-  </div>
-
-  <div class="container" id="todoList">
-  </div>
-
-  <script>
+<script>
 // イベント
    window.onload = () => {
      setDate();
@@ -180,21 +162,8 @@
       subBtn.textContent = "＋サブタスク";
       subBtn.className = "form-control btn btn-secondary";
       subBtn.onclick = () => {
-        // 入力ダイアログ表示
-        const modal = new bootstrap.Modal(document.getElementById('myModal'));
-        modal.show();
-
-        const okButton = document.getElementById('modal-ok');
-        const subInput = document.getElementById('subtask');
-        subInput.value = "";
-        okButton.onclick = () => {
-          const subText = subInput.value.trim();
-          if (subText) {
-            const subLi = createSubtaskElement(subText, false);
-            subtaskList.appendChild(subLi);
-            modal.hide();
-          }
-        };
+        const subLi = createSubtaskElement("", false);
+        subtaskList.appendChild(subLi);
       };
       // ラップ
       const subBtnCol = document.createElement("div");
@@ -205,7 +174,7 @@
       const deleteBtn = document.createElement("button");
       deleteBtn.textContent = "削除";
       deleteBtn.className = "form-control btn btn-danger";
-      deleteBtn.onclick = () => item.remove();
+      deleteBtn.onclick = () => container.remove();
       // ラップ
       const deleteBtnCol = document.createElement("div");
       deleteBtnCol.className = "col-12 col-md-auto ms-auto";
@@ -367,6 +336,6 @@
       });
     }
 
-  </script>
+</script>
 </body>
 </html>
