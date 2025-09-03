@@ -7,21 +7,40 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 </head>
 <body>
+
+<div class="modal fade" id="myModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">サブタスク入力</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <input type="text" id="subtask" class="form-control" placeholder="サブタスクを入力">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
+        <button type="button" id="modal-ok" class="btn btn-primary">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
   <div class="h1 container">ToDoアプリ ver1.04📝</div>
 
   <div class="h2 container" id="date-display"></div>
   <div class="container" id="ww_015ccc60f42be" v='1.3' loc='id' a='{"t":"responsive","lang":"ja","sl_lpl":1,"ids":["wl926"],"font":"Arial","sl_ics":"one_a","sl_sot":"celsius","cl_bkg":"image","cl_font":"#FFFFFF","cl_cloud":"#FFFFFF","cl_persp":"#81D4FA","cl_sun":"#FFC107","cl_moon":"#FFC107","cl_thund":"#FF5722"}'>More forecasts: <a href="https://oneweather.org/ja/tokyo/10_days/" id="ww_015ccc60f42be_u" target="_blank">東京 10日間天気</a></div><script async src="https://app3.weatherwidget.org/js/?id=ww_015ccc60f42be"></script>
   
-  <div class="container border px-3 py-3">
-    <div class="d-flex flex-column flex-md-row">
-      <input type="text" id="todoInput" class="form-control mb-3" placeholder="やることを入力">
-      <button type="button" class="btn btn-primary col-12 col-md-auto mb-3" onclick="addTodo()">追加</button>
-      <button class="btn btn-secondary col-12 col-md-auto mb-3" onclick="saveAsXML()">XML保存</button>
+  <div class="container border gap-3 shadow p-3 my-3">
+    <div class="d-flex flex-column gap-3 flex-md-row mb-3">
+      <input type="text" id="todoInput" class="form-control" placeholder="やることを入力">
+      <button type="button" class="btn btn-primary col-12 col-md-auto" onclick="addTodo()">追加</button>
+      <button class="btn btn-secondary col-12 col-md-auto" onclick="saveAsXML()">XML保存</button>
     </div>
-    <div class="mb-3"><input class="form-control" type="file" accept=".xml" onchange="loadFromXML(event)"></div>
+    <div class=""><input class="form-control" type="file" accept=".xml" onchange="loadFromXML(event)"></div>
   </div>
 
-  <div class="container py-3" id="todoList">
+  <div class="container" id="todoList">
   </div>
 
   <script>
@@ -51,7 +70,7 @@
 
       // タスク全体をラップ
       const container = document.createElement("div");
-      container.className = "d-flex flex-column";
+      container.className = "d-flex flex-column mb-3";
 
       // 入力の受け取り
       const input = document.getElementById("todoInput");
@@ -62,7 +81,7 @@
 
       // 項目の追加
       const item = document.createElement("label");
-      item.className = "d-flex flex-row flex-wrap border py-3";
+      item.className = "d-flex flex-row gap-3 flex-wrap border p-3";
 
       //ドラッグ機能を追加
        let draggedItem = null;
@@ -108,7 +127,7 @@
       task.value = text;
       // ラップ
       const taskCol = document.createElement("div");
-      taskCol.className = "col-md-auto col-7";
+      taskCol.className = "col-12 col-md-5 col-lg-6";
       taskCol.appendChild(task);
 
       // 重要度セレクト
@@ -159,31 +178,42 @@
       // サブタスク追加ボタン
       const subBtn = document.createElement("button");
       subBtn.textContent = "＋サブタスク";
-      subBtn.className = "form-control";
+      subBtn.className = "form-control btn btn-secondary";
       subBtn.onclick = () => {
-        const subText = prompt("サブタスクの内容を入力");
-        if (!subText) return;
-        const subLi = createSubtaskElement(subText, false);
-        subtaskList.appendChild(subLi);
+        // 入力ダイアログ表示
+        const modal = new bootstrap.Modal(document.getElementById('myModal'));
+        modal.show();
+
+        const okButton = document.getElementById('modal-ok');
+        const subInput = document.getElementById('subtask');
+        subInput.value = "";
+        okButton.onclick = () => {
+          const subText = subInput.value.trim();
+          if (subText) {
+            const subLi = createSubtaskElement(subText, false);
+            subtaskList.appendChild(subLi);
+            modal.hide();
+          }
+        };
       };
       // ラップ
       const subBtnCol = document.createElement("div");
-      subBtnCol.className = "col-auto";
+      subBtnCol.className = "col-12 col-md-auto";
       subBtnCol.appendChild(subBtn);
 
       // 削除ボタン
       const deleteBtn = document.createElement("button");
       deleteBtn.textContent = "削除";
-      deleteBtn.className = "form-control";
+      deleteBtn.className = "form-control btn btn-danger";
       deleteBtn.onclick = () => item.remove();
       // ラップ
       const deleteBtnCol = document.createElement("div");
-      deleteBtnCol.className = "col-auto ms-auto";
+      deleteBtnCol.className = "col-12 col-md-auto ms-auto";
       deleteBtnCol.appendChild(deleteBtn);
 
       // サブタスクリスト
       const subtaskList = document.createElement("div");
-      subtaskList.className = "";
+      subtaskList.className = "ps-3";
       // 既存のサブタスクを復元
       subtasks.forEach(sub => {
         const subLi = createSubtaskElement(sub.text, sub.completed);
@@ -205,20 +235,23 @@
 
 // サブタスク追加
     function createSubtaskElement(text, completed) {
-      const subLi = document.createElement("div");
-      subLi.className = 'd-flex flex-row border p-3';
+      const subLi = document.createElement("label");
+      subLi.className = 'd-flex flex-row border gap-3 p-3';
+      subLi.id = "subtask-list";
 
       // チェックボックス
       const subCheckbox = document.createElement("input");
       subCheckbox.type = "checkbox";
-      subCheckbox.className = "form-checkbox"
+      subCheckbox.className = "form-check-input"
       subCheckbox.checked = completed;
       subCheckbox.onchange = () => {
-        subLi.classList.toggle("completed", subCheckbox.checked);
+        subLi.classList.toggle("bg-success", subCheckbox.checked);
       };
+      // 起動時、既にチェック済みの時
+      if (completed) subLi.classList.add("bg-success");
       // ラップ
       const subCheckCol = document.createElement("div");
-      subCheckCol.className = "col";
+      subCheckCol.className = "p-2";
       subCheckCol.appendChild(subCheckbox);
 
       // サブタスク
@@ -235,11 +268,11 @@
       // 削除ボタン
       const subDeleteBtn = document.createElement("button");
       subDeleteBtn.textContent = "削除";
-      subDeleteBtn.className = "form-control ms-auto";
+      subDeleteBtn.className = "form-control btn btn-danger";
       subDeleteBtn.onclick = () => subLi.remove();
       // ラップ
       const subDeleteBtnCol = document.createElement("div");
-      subDeleteBtnCol.className = "col";
+      subDeleteBtnCol.className = "ms-auto";
       subDeleteBtnCol.appendChild(subDeleteBtn);
 
       subLi.appendChild(subCheckCol);
@@ -258,7 +291,7 @@
         const completed = task.querySelector("input[type='checkbox']").checked;
         const priority = task.querySelector("select").value;
         xml += `  <todo completed="${completed}" priority="${priority}">${text}\n`;
-        const subtasks = task.querySelectorAll(".subtask-list");
+        const subtasks = task.querySelectorAll("#subtask-list");
         subtasks.forEach(subtask => {
           const subText = subtask.querySelector("input[type='text']").value;
           const subCompleted = subtask.querySelector("input[type='checkbox']").checked;
@@ -312,7 +345,7 @@
         const completed = task.querySelector("input[type='checkbox']").checked;
         const priority = task.querySelector("select").value;
     
-        const subtasks = Array.from(task.querySelectorAll(".subtask-list")).map(subtask => {
+        const subtasks = Array.from(task.querySelectorAll("#subtask-list")).map(subtask => {
           return {
             text: subtask.querySelector("input[type='text']").value,
             completed: subtask.querySelector("input[type='checkbox']").checked
