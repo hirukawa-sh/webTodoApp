@@ -6,20 +6,43 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 </head>
+<style>
+  /* チェックボックス */
+  input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    transition: 0.3s;
+  }
+
+  input[type="checkbox"]:checked {
+    transform: scale(150%);
+    background-color: orange;
+  }
+
+  /* タスク */
+  #todo-item, #subtask-list {
+    transition: 0.3s;
+  }
+
+  #todo-item:hover, #subtask-list:hover {
+    transform: scale(102%);
+  }
+
+</style>
 <body>
 
 <div class="h1 container">ToDoアプリ ver1.04📝</div>
 
 <div class="h2 container" id="date-display"></div>
-<div class="container" id="ww_015ccc60f42be" v='1.3' loc='id' a='{"t":"responsive","lang":"ja","sl_lpl":1,"ids":["wl926"],"font":"Arial","sl_ics":"one_a","sl_sot":"celsius","cl_bkg":"image","cl_font":"#FFFFFF","cl_cloud":"#FFFFFF","cl_persp":"#81D4FA","cl_sun":"#FFC107","cl_moon":"#FFC107","cl_thund":"#FF5722"}'>More forecasts: <a href="https://oneweather.org/ja/tokyo/10_days/" id="ww_015ccc60f42be_u" target="_blank">東京 10日間天気</a></div><script async src="https://app3.weatherwidget.org/js/?id=ww_015ccc60f42be"></script>
+<div id="ww_015ccc60f42be" v='1.3' loc='id' a='{"t":"responsive","lang":"ja","sl_lpl":1,"ids":["wl926"],"font":"Arial","sl_ics":"one_a","sl_sot":"celsius","cl_bkg":"image","cl_font":"#FFFFFF","cl_cloud":"#FFFFFF","cl_persp":"#81D4FA","cl_sun":"#FFC107","cl_moon":"#FFC107","cl_thund":"#FF5722"}'>More forecasts: <a href="https://oneweather.org/ja/tokyo/10_days/" id="ww_015ccc60f42be_u" target="_blank">東京 10日間天気</a></div><script async src="https://app3.weatherwidget.org/js/?id=ww_015ccc60f42be"></script>
 
-<div class="container border gap-3 shadow p-3 my-3">
+<div class="container border gap-3 bg-light bg-gradient shadow p-3 my-3">
   <div class="d-flex flex-column gap-3 flex-md-row mb-3">
     <input type="text" id="todoInput" class="form-control" placeholder="やることを入力">
-    <button type="button" class="btn btn-primary col-12 col-md-auto" onclick="addTodo()">追加</button>
-    <button class="btn btn-secondary col-12 col-md-auto" onclick="saveAsXML()">XML保存</button>
+    <button type="button" class="btn btn-primary bg-gradient col-12 col-md-auto" onclick="addTodo()">追加</button>
+    <button class="btn btn-secondary bg-gradient col-12 col-md-auto" onclick="saveAsXML()">XML保存</button>
   </div>
-  <div class=""><input class="form-control" type="file" accept=".xml" onchange="loadFromXML(event)"></div>
+  <div class="col-auto"><input class="form-control" type="file" accept=".xml" onchange="loadFromXML(event)"></div>
 </div>
 
 <div class="container" id="todoList">
@@ -35,7 +58,6 @@
    window.onunload = () => {
      saveToLocalStorage();
    };
-
 
 // 日付のセット
     function setDate() {
@@ -63,7 +85,7 @@
 
       // 項目の追加
       const item = document.createElement("label");
-      item.className = "d-flex flex-row gap-3 flex-wrap border p-3";
+      item.className = "d-flex flex-row gap-3 flex-wrap bg-light bg-gradient border p-3";
       item.id = "todo-item";
 
       //ドラッグ機能を追加
@@ -94,10 +116,14 @@
       checkbox.className = "form-check-input";
       checkbox.checked = checked;
       checkbox.onchange = () => {
+        item.classList.toggle("bg-light");
         item.classList.toggle("bg-success", checkbox.checked);
       };
       // 起動時、既にチェック済みの時
-      if (checked) item.classList.add("bg-success");
+      if (checked) {
+        item.classList.toggle("bg-light");
+        item.classList.toggle("bg-success", checkbox.checked);
+      }
       // ラップ
       const checkboxCol = document.createElement("div");
       checkboxCol.className = "col-auto p-2";
@@ -161,7 +187,7 @@
       // サブタスク追加ボタン
       const subBtn = document.createElement("button");
       subBtn.textContent = "＋サブタスク";
-      subBtn.className = "form-control btn btn-secondary";
+      subBtn.className = "form-control btn btn-secondary bg-gradient";
       subBtn.onclick = () => {
         const subLi = createSubtaskElement("", false);
         subtaskList.appendChild(subLi);
@@ -174,7 +200,7 @@
       // 削除ボタン
       const deleteBtn = document.createElement("button");
       deleteBtn.textContent = "削除";
-      deleteBtn.className = "form-control btn btn-danger";
+      deleteBtn.className = "form-control btn btn-danger bg-gradient";
       deleteBtn.onclick = () => container.remove();
       // ラップ
       const deleteBtnCol = document.createElement("div");
@@ -206,7 +232,7 @@
 // サブタスク追加
     function createSubtaskElement(text, completed) {
       const subLi = document.createElement("label");
-      subLi.className = 'd-flex flex-row border gap-3 p-3';
+      subLi.className = 'd-flex flex-row bg-light bg-gradient border gap-3 p-3';
       subLi.id = "subtask-list";
 
       // チェックボックス
@@ -215,10 +241,14 @@
       subCheckbox.className = "form-check-input"
       subCheckbox.checked = completed;
       subCheckbox.onchange = () => {
+        subLi.classList.toggle("bg-light");
         subLi.classList.toggle("bg-success", subCheckbox.checked);
       };
       // 起動時、既にチェック済みの時
-      if (completed) subLi.classList.add("bg-success");
+      if (completed) {
+        subLi.classList.toggle("bg-light");
+        subLi.classList.toggle("bg-success", checkbox.checked);
+      }
       // ラップ
       const subCheckCol = document.createElement("div");
       subCheckCol.className = "p-2";
@@ -230,7 +260,6 @@
       subTask.placeholder = "サブタスクを入力";
       subTask.value = text;
       subTask.className = "form-control";
-      if (completed) subLi.classList.add("completed");
       // ラップ
       const subTaskCol = document.createElement("div");
       subTaskCol.className = "col";
@@ -239,7 +268,7 @@
       // 削除ボタン
       const subDeleteBtn = document.createElement("button");
       subDeleteBtn.textContent = "削除";
-      subDeleteBtn.className = "form-control btn btn-danger";
+      subDeleteBtn.className = "form-control btn btn-danger bg-gradient";
       subDeleteBtn.onclick = () => subLi.remove();
       // ラップ
       const subDeleteBtnCol = document.createElement("div");
