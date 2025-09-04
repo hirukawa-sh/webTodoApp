@@ -52,6 +52,7 @@
 
       // タスク全体をラップ
       const container = document.createElement("div");
+      container.id = "task-list";
       container.className = "d-flex flex-column mb-3";
 
       // 入力の受け取り
@@ -64,26 +65,25 @@
       // 項目の追加
       const item = document.createElement("label");
       item.className = "d-flex flex-row gap-3 flex-wrap border p-3";
-      item.id = "todo-item";
 
       //ドラッグ機能を追加
-       let draggedItem = null;
+      let draggedItem = null;
        
-      item.draggable = true;
-      item.ondragstart = (e) => {
+      container.draggable = true;
+      container.ondragstart = (e) => {
         e.dataTransfer.setData("text/plain", null);
-        draggedItem = item;
+        draggedItem = container;
       };
       
-      item.ondragover = (e) => {
+      container.ondragover = (e) => {
         e.preventDefault();
       };
       
-      item.ondrop = (e) => {
+      container.ondrop = (e) => {
         e.preventDefault();
         const todoList = document.getElementById("todoList");
-        if (draggedItem !== item) {
-          todoList.insertBefore(draggedItem, item.nextSibling);
+        if (draggedItem !== container) {
+          todoList.insertBefore(draggedItem, container.nextSibling);
           saveToLocalStorage(); // 並び替え後に保存
         }
       };
@@ -255,7 +255,7 @@
 
 // XML保存
     function saveAsXML() {
-      const todos = document.querySelectorAll("#todoList");
+      const todos = document.querySelectorAll("#task-list");
       let xml = '<?xml version="1.0" encoding="UTF-8"?>\n<todos>\n';
       todos.forEach(task => {
         const text = task.querySelector("input[type='text']").value;
@@ -311,7 +311,7 @@
 // localstrage保存
     function saveToLocalStorage() {
       const todos = [];
-      document.querySelectorAll("#todoList").forEach(task => {
+      document.querySelectorAll("#task-list").forEach(task => {
         const text = task.querySelector("input[type='text']").value;
         const completed = task.querySelector("input[type='checkbox']").checked;
         const priority = task.querySelector("select").value;
