@@ -21,11 +21,20 @@
 
   /* タスク */
   #todo-item, #subtask-list {
-    transition: 0.3s;
+    transition: .3s;
   }
-
+  
   #todo-item:hover, #subtask-list:hover {
     transform: scale(102%);
+  }
+
+  .custom-border {
+    border: solid 1px;
+    border-color: var(--bs-border-color);
+  }
+  
+  .custom-border:hover {
+    filter: drop-shadow(0px 0px 5px var(--bs-info));
   }
 
 </style>
@@ -86,7 +95,7 @@
 
       // 項目の追加
       const item = document.createElement("label");
-      item.className = "d-flex flex-row gap-3 flex-wrap bg-light bg-gradient border p-3";
+      item.className = "d-flex flex-row gap-3 flex-wrap bg-light bg-gradient custom-border p-3";
       item.id = "todo-item";
 
 
@@ -234,7 +243,7 @@
 // サブタスク追加
     function createSubtaskElement(text, completed) {
       const subLi = document.createElement("label");
-      subLi.className = 'd-flex flex-row bg-light bg-gradient border gap-3 p-3';
+      subLi.className = 'd-flex flex-row bg-light bg-gradient custom-border gap-3 p-3';
       subLi.id = "subtask-list";
 
       // チェックボックス
