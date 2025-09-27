@@ -22,19 +22,26 @@
   crossorigin="anonymous"/>
 </head>
 <body>
-  <div id="root">Now Loading</div>
-    <script type="module">
-        // ReactとReactDOMをグローバルに展開
-        import React from 'react';
-        import { createRoot } from 'react-dom';
-        import * as ReactBootstrap from 'react-bootstrap';
-        const { Container, Button } = ReactBootstrap;
-        window.React = React;
-        window.createRoot = createRoot;
-        window.Container = Container;
-        window.Button = Button;
-    </script>
-    <script type="text/babel" data-type="module" src="./components/title.jsx"></script>
-    <script type="text/babel" data-type="module" src="./components/app.jsx"></script>
+<div id="root">Now Loading...</div>
+  <script type="module">
+    // ReactとReactDOMをグローバルに展開
+    import React, { useState, useEffect } from 'react';
+    import { createRoot } from 'react-dom';
+    import * as ReactBootstrap from 'react-bootstrap';
+    const { Container, Button, Stack, Form, Card } = ReactBootstrap;
+    window.React = React;
+    window.useState = useState;
+    window.useEffect = useEffect;
+    window.createRoot = createRoot;
+    window.Container = Container;
+    window.Button = Button;
+    window.Stack = Stack;
+    window.Form = Form;
+    window.Card = Card;
+  </script>
+  <script type="text/babel" data-type="module" src="./components/title.jsx"></script>
+  <script type="text/babel" data-type="module" src="./components/weather.jsx"></script>
+  <script type="text/babel" data-type="module" src="./components/input.jsx"></script>
+  <script type="text/babel" data-type="module" src="./components/app.jsx"></script>
 </body>
 </html>
