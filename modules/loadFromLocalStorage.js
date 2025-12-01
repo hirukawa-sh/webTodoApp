@@ -2,7 +2,6 @@ import addTodo from "addTodo";
 
 // localstrage読み込み
 function loadFromLocalStorage() {
-  console.log('c');
   const data = JSON.parse(localStorage.getItem("todoData") || "[]");
   document.getElementById("todoList").innerHTML = "";
   data.forEach(item => {

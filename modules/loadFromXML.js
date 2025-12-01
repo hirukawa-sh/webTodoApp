@@ -1,4 +1,4 @@
-import {addTodo} from "addTodo";
+import addTodo from "addTodo";
 
 // XML読み込み
 function loadFromXML(event) {
