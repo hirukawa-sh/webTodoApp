@@ -56,8 +56,7 @@ function addTodo(text = "", checked = false, priority = "ℹ️低", subtasks = 
   };
   // 起動時、既にチェック済みの時
   if (checked) {
-    item.classList.toggle("bg-light");
-    item.classList.toggle("bg-success", checkbox.checked);
+    checkbox.dispatchEvent(new Event("change"));
   }
   // ラップ
   const checkboxCol = document.createElement("div");
@@ -159,6 +158,10 @@ function addTodo(text = "", checked = false, priority = "ℹ️低", subtasks = 
   subtasks.forEach(sub => {
     const subLi = createSubtaskElement(sub.text, sub.completed);
     subtaskList.appendChild(subLi);
+  });
+  // サブタスクのソート
+  Sortable.create(subtaskList, {
+    animation: 200,
   });
 
   // コントロール追加
