@@ -3,20 +3,25 @@ import saveToLocalStorage from "saveToLocalStorage";
 import addTodo from "addTodo";
 import saveAsXML from "saveAsXML";
 
+// 外部に公開する関数
 window.addTodo = addTodo;
 window.saveAsXML = saveAsXML;
 
-function app() {
-  // イベント
-  window.onload = () => {
-   setDate();
-   loadFromLocalStorage();
-  };
-  
-  window.onunload = () => {
-   saveToLocalStorage();
-  };
-}
+// リストの並べかえを実装
+const todoList = document.getElementById('todoList');
+Sortable.create(todoList, {
+  animation: 200,
+});
+
+// イベント
+window.onload = () => {
+ setDate();
+ loadFromLocalStorage();
+};
+
+window.onunload = () => {
+ saveToLocalStorage();
+};
 
 // 日付のセット
 function setDate() {
@@ -27,5 +32,3 @@ function setDate() {
    const formattedDate = `${date.getFullYear()}年 ${date.getMonth() + 1}月 ${date.getDate()}日 ${weekdays[date.getDay()]}曜日`;
    dateLabel.textContent = formattedDate;
 }
-
-app();

@@ -2,10 +2,12 @@ import createSubtaskElement from "createSubtaskElement";
 
 // タスク追加
 function addTodo(text = "", checked = false, priority = "ℹ️低", subtasks = []) {
+  const root = document.getElementById("todoList");
+
   // タスク全体をラップ
   const container = document.createElement("div");
   container.id = "task-list";
-  container.className = "d-flex flex-column mb-3";
+  container.className = "d-flex flex-column mb-2";
 
   // 入力の受け取り
   const input = document.getElementById("todoInput");
@@ -16,10 +18,11 @@ function addTodo(text = "", checked = false, priority = "ℹ️低", subtasks = 
 
   // 項目の追加
   const item = document.createElement("label");
-  item.className = "d-flex flex-row gap-3 flex-wrap bg-light bg-gradient custom-border p-3";
+  item.className = "d-flex flex-row gap-2 flex-wrap bg-light bg-gradient custom-border p-2";
   item.id = "todo-item";
 
   //ドラッグ機能を追加
+  /*
   let draggedItem = null;
    
   container.draggable = true;
@@ -40,6 +43,7 @@ function addTodo(text = "", checked = false, priority = "ℹ️低", subtasks = 
       saveToLocalStorage(); // 並び替え後に保存
     }
   };
+  */
 
   // タスク完了チェックボックス
   const checkbox = document.createElement("input");
@@ -115,6 +119,16 @@ function addTodo(text = "", checked = false, priority = "ℹ️低", subtasks = 
   priorityCol.className = "col-auto";
   priorityCol.appendChild(select);
 
+  // 期限
+  const deadline = document.createElement("input");
+  deadline.type = "date";
+  deadline.className = "form-control";
+  deadline.value = Date.now;
+  // ラップ
+  const deadlineCol = document.createElement("div");
+  deadlineCol.className = "col-auto";
+  deadlineCol.appendChild(deadline);
+
   // サブタスク追加ボタン
   const subBtn = document.createElement("button");
   subBtn.textContent = "＋サブタスク";
@@ -150,13 +164,14 @@ function addTodo(text = "", checked = false, priority = "ℹ️低", subtasks = 
   // コントロール追加
   item.appendChild(checkboxCol);
   item.appendChild(priorityCol);
+  item.appendChild(deadlineCol);
   item.appendChild(taskCol);
   item.appendChild(subBtnCol);
   item.appendChild(deleteBtnCol);
   container.appendChild(item);
   container.appendChild(subtaskList);
 
-  document.getElementById("todoList").appendChild(container);
+  root.appendChild(container);
   input.value = "";
 }
 
