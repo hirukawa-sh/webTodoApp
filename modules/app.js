@@ -2,10 +2,12 @@ import loadFromLocalStorage from "loadFromLocalStorage";
 import saveToLocalStorage from "saveToLocalStorage";
 import addTodo from "addTodo";
 import saveAsXML from "saveAsXML";
+import loadFromXML from "loadFromXML";
 
 // 外部に公開する関数
 window.addTodo = addTodo;
 window.saveAsXML = saveAsXML;
+window.loadFromXML = loadFromXML;
 
 // リストの並べかえを実装
 const todoList = document.getElementById('todoList');

@@ -6,7 +6,8 @@ function saveAsXML() {
     const text = task.querySelector("input[type='text']").value;
     const completed = task.querySelector("input[type='checkbox']").checked;
     const priority = task.querySelector("select").value;
-    xml += `  <todo completed="${completed}" priority="${priority}">${text}\n`;
+    const deadline = task.querySelector("input[type='datetime-local']").value;
+    xml += `  <todo completed="${completed}" priority="${priority}" deadline="${deadline}">${text}\n`;
     const subtasks = task.querySelectorAll("#subtask-list");
     subtasks.forEach(subtask => {
       const subText = subtask.querySelector("input[type='text']").value;
@@ -23,5 +24,4 @@ function saveAsXML() {
   a.download = "todos.xml";
   a.click();
 }
-window.saveAsXML = saveAsXML;
 export default saveAsXML;

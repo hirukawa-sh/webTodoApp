@@ -5,6 +5,7 @@ function saveToLocalStorage() {
     const text = task.querySelector("input[type='text']").value;
     const completed = task.querySelector("input[type='checkbox']").checked;
     const priority = task.querySelector("select").value;
+    const deadline = task.querySelector("input[type='datetime-local']").value;
     
     const subtasks = Array.from(task.querySelectorAll("#subtask-list")).map(subtask => {
       return {
@@ -13,7 +14,7 @@ function saveToLocalStorage() {
       };
     });
     
-    todos.push({ text, completed, priority, subtasks });
+    todos.push({ text, completed, priority, deadline, subtasks });
   });
   
   localStorage.setItem("todoData", JSON.stringify(todos));

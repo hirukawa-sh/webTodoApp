@@ -16,6 +16,7 @@ function loadFromXML(event) {
       const text = todo.textContent.trim().split("\n")[0].trim(); // タスクの本文
       const completed = todo.getAttribute("completed") === "true";
       const priority = todo.getAttribute("priority") || "ℹ️低";
+      const deadline = todo.getAttribute("deadline");
       
       const subtaskNodes = todo.getElementsByTagName("subtask");
       const subtasks = Array.from(subtaskNodes).map(sub => ({

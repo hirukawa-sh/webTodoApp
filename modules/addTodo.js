@@ -1,7 +1,7 @@
 import createSubtaskElement from "createSubtaskElement";
 
 // タスク追加
-function addTodo(text = "", checked = false, priority = "ℹ️低", subtasks = []) {
+function addTodo(text = "", checked = false, priority = "ℹ️低", deadline = "1900-01-01T00:00", subtasks = []) {
   const root = document.getElementById("todoList");
 
   // タスク全体をラップ
@@ -119,14 +119,14 @@ function addTodo(text = "", checked = false, priority = "ℹ️低", subtasks = 
   priorityCol.appendChild(select);
 
   // 期限
-  const deadline = document.createElement("input");
-  deadline.type = "date";
-  deadline.className = "form-control";
-  deadline.value = Date.now;
+  const datetime = document.createElement("input");
+  datetime.type = "datetime-local";
+  datetime.className = "form-control";
+  datetime.value = deadline;
   // ラップ
   const deadlineCol = document.createElement("div");
   deadlineCol.className = "col-auto";
-  deadlineCol.appendChild(deadline);
+  deadlineCol.appendChild(datetime);
 
   // サブタスク追加ボタン
   const subBtn = document.createElement("button");
