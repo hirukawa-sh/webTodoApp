@@ -17,6 +17,10 @@ function createSubtaskElement(text, completed) {
   subLi.className = 'd-flex flex-row bg-light bg-gradient custom-border gap-2 p-2';
   subLi.id = "subtask-list";
 
+  // ドラッグハンドル
+  const draggableHandle = document.createElement("div");
+  draggableHandle.className = "draggable-handle";
+  
   // チェックボックス
   const subCheckbox = document.createElement("input");
   subCheckbox.type = "checkbox";
@@ -57,6 +61,7 @@ function createSubtaskElement(text, completed) {
   subDeleteBtnCol.className = "ms-auto";
   subDeleteBtnCol.appendChild(subDeleteBtn);
 
+  subLi.appendChild(draggableHandle);
   subLi.appendChild(subCheckCol);
   subLi.appendChild(subTaskCol);
   subLi.appendChild(subDeleteBtnCol);

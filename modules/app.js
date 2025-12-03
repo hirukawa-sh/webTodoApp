@@ -12,6 +12,8 @@ window.loadFromXML = loadFromXML;
 // リストの並べかえを実装
 const todoList = document.getElementById('todoList');
 Sortable.create(todoList, {
+  group: "task",
+  handle: ".draggable-handle.wide",
   animation: 200,
 });
 

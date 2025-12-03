@@ -1,7 +1,7 @@
 import createSubtaskElement from "createSubtaskElement";
 
 // タスク追加
-function addTodo(text = "", checked = false, priority = "ℹ️低", deadline = "1900-01-01T00:00", subtasks = []) {
+function addTodo(text = "", checked = false, priority = "ℹ️低", deadline = "", subtasks = []) {
   const root = document.getElementById("todoList");
 
   // タスク全体をラップ
@@ -44,6 +44,10 @@ function addTodo(text = "", checked = false, priority = "ℹ️低", deadline = 
     }
   };
   */
+  
+  // ドラッグハンドル
+  const draggableHandle = document.createElement("div");
+  draggableHandle.className = "draggable-handle wide";
 
   // タスク完了チェックボックス
   const checkbox = document.createElement("input");
@@ -86,33 +90,6 @@ function addTodo(text = "", checked = false, priority = "ℹ️低", deadline = 
     select.appendChild(option);
   });
   
-  // ボタン要素の作成
-  /*
-  const button = document.createElement('button');
-  button.className = 'btn btn-secondary dropdown-toggle';
-  button.type = 'button';
-  button.id = 'dropdownMenuButton';
-  button.setAttribute('data-bs-toggle', 'dropdown');
-  button.setAttribute('aria-expanded', 'false');
-  button.textContent = '優先度';
-
-  // ドロップダウンメニューの作成
-  const menu = document.createElement('ul');
-  menu.className = 'dropdown-menu';
-  menu.setAttribute('aria-labelledby', 'dropdownMenuButton');
-
-  // メニュー項目の追加
-  const items = ["💥高", "⚠️中", "ℹ️低"];
-  items.forEach(text => {
-    const li = document.createElement('li');
-    const a = document.createElement('a');
-    a.className = 'dropdown-item';
-    a.href = '#';
-    a.textContent = text;
-    li.appendChild(a);
-    menu.appendChild(li);
-  });
-  */
   // ラップ
   const priorityCol = document.createElement('div');
   priorityCol.className = "col-auto";
@@ -161,10 +138,13 @@ function addTodo(text = "", checked = false, priority = "ℹ️低", deadline = 
   });
   // サブタスクのソート
   Sortable.create(subtaskList, {
+    group: "subtask",
+    handle: ".draggable-handle",
     animation: 200,
   });
 
   // コントロール追加
+  item.appendChild(draggableHandle);
   item.appendChild(checkboxCol);
   item.appendChild(priorityCol);
   item.appendChild(deadlineCol);
