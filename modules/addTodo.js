@@ -89,6 +89,32 @@ function addTodo(text = "", checked = false, priority = "ℹ️低", deadline = 
     option.value = text;
     select.appendChild(option);
   });
+  // イベントの追加
+  select.onchange = () => {
+    switch(select.selectedIndex) {
+      // 優先度:高
+      case 0:
+        item.classList.add("border-3");
+        item.classList.remove("border-warning");
+        item.classList.add("border-danger");
+        break;
+        
+      // 優先度:中
+      case 1:
+        item.classList.add("border-3");
+        item.classList.add("border-warning");
+        item.classList.remove("border-danger");
+        break;
+      
+      // 優先度:低
+      case 2:
+        item.classList.remove("border-3");
+        item.classList.remove("border-warning");
+        item.classList.remove("border-danger");
+        break;
+    }
+  };
+  select.dispatchEvent(new Event("change"));
   
   // ラップ
   const priorityCol = document.createElement('div');
