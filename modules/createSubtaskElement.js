@@ -1,18 +1,5 @@
 // サブタスク追加
 function createSubtaskElement(text, completed) {
-  const html =
-  `<label id="subtask-list" class="d-flex flex-row bg-light bg-gradient custom-border gap-2 p-2">/n` +
-  ` <div class="p-2">/n` +
-  `   <input type="checkbox" name="completed" class="form-check-input" ${completed ? "checked" : ""}>/n` +
-  ` </div>/n` +
-  ` <div class="col">/n` +
-  `   <input type="text" name="subtask" class="form-control" value="${text}" placeholder="サブタスクを入力">/n` +
-  ` </div>/n` +
-  ` <div class="ms-auto">/n` +
-  `   <button class="form-control btn btn-danger bg-gradient">削除</button>/n` +
-  ` </div>/n` +
-  `</label>/n`;
-  
   const subLi = document.createElement("label");
   subLi.className = 'd-flex flex-row bg-light bg-gradient custom-border gap-2 p-2';
   subLi.id = "subtask-list";
@@ -24,6 +11,7 @@ function createSubtaskElement(text, completed) {
   // チェックボックス
   const subCheckbox = document.createElement("input");
   subCheckbox.type = "checkbox";
+  subCheckbox.name ="completed";
   subCheckbox.className = "form-check-input"
   subCheckbox.checked = completed;
   subCheckbox.onchange = () => {
@@ -43,6 +31,7 @@ function createSubtaskElement(text, completed) {
   // サブタスク
   const subTask = document.createElement("input");
   subTask.type = "text";
+  subTask.name = "subtask";
   subTask.placeholder = "サブタスクを入力";
   subTask.value = text;
   subTask.className = "form-control";
