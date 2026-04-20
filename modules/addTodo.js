@@ -51,6 +51,7 @@ function addTodo(text = "", checked = false, priority = "ℹ️低", deadline = 
 
   // タスク完了チェックボックス
   const checkbox = document.createElement("input");
+  checkbox.name = "completed";
   checkbox.type = "checkbox";
   checkbox.className = "form-check-input";
   checkbox.checked = checked;
@@ -70,6 +71,7 @@ function addTodo(text = "", checked = false, priority = "ℹ️低", deadline = 
   // タスク
   const task = document.createElement("input");
   task.type = "text";
+  task.name = "task";
   task.className = "form-control";
   task.value = text;
   // ラップ
@@ -79,6 +81,7 @@ function addTodo(text = "", checked = false, priority = "ℹ️低", deadline = 
 
   // 重要度セレクト
   const select = document.createElement('select');
+  select.name = "priority";
   select.className = "form-select";
   select.ariaLabel = "Default select";
   // メニュー項目の追加
@@ -89,6 +92,7 @@ function addTodo(text = "", checked = false, priority = "ℹ️低", deadline = 
     option.value = text;
     select.appendChild(option);
   });
+  [...select.options].find(option => option.value == priority).selected = true;
   // イベントの追加
   select.onchange = () => {
     switch(select.selectedIndex) {
@@ -123,6 +127,7 @@ function addTodo(text = "", checked = false, priority = "ℹ️低", deadline = 
 
   // 期限
   const datetime = document.createElement("input");
+  datetime.name = "deadline";
   datetime.type = "datetime-local";
   datetime.className = "form-control";
   datetime.value = deadline;
