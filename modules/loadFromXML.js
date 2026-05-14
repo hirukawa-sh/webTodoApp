@@ -24,7 +24,7 @@ function loadFromXML(event) {
         completed: sub.getAttribute("completed") === "true"
       }));
       
-      addTodo(text, completed, priority, subtasks);
+      addTodo(text, completed, priority, deadline, subtasks);
     }
   };
   reader.readAsText(file);
