@@ -18,14 +18,14 @@ Sortable.create(todoList, {
 });
 
 // イベント
-window.onload = () => {
+window.addEventListener("pageshow", () => {
  setDate();
  loadFromLocalStorage();
-};
+});
 
-window.onunload = () => {
+window.addEventListener("pagehide", () => {
  saveToLocalStorage();
-};
+});
 
 // 日付のセット
 function setDate() {
